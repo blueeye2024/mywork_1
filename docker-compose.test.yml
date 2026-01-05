@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: cheongan-backend-test
+    ports:
+      - "8001:8000"
+    environment:
+      - DATABASE_URL=mysql+aiomysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  frontend:
+    container_name: cheongan-frontend-test
+    ports:
+      - "9201:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://114.108.180.228:8001
+      - NEXT_PUBLIC_SITE_URL=http://114.108.180.228:9201
+      - NEXT_PUBLIC_APP_VERSION=${APP_VERSION:-test}-TEST
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
