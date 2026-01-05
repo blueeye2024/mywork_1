@@ -27,3 +27,7 @@ Write-Host "[3/3] All services started!" -ForegroundColor Green
 Write-Host "   - Backend API: http://localhost:8000/docs"
 Write-Host "   - Frontend UI: http://localhost:3000"
 Write-Host "   (Note: 창을 닫으면 서버가 종료됩니다)"
+
+# 웹 브라우저 자동 실행
+Start-Sleep -Seconds 2
+Start-Process "http://localhost:3000"
