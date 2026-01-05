@@ -1,6 +1,23 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-background: #020617;
+  --color-foreground: #f8fafc;
+
+  /* Custom Colors for Cheongan */
+  --color-card: rgba(255, 255, 255, 0.05);
+  --color-card-border: rgba(255, 255, 255, 0.1);
+
+  /* Extend Utilities */
+  --backdrop-blur-xs: 2px;
+  --radius-4xl: 2rem;
+}
+
+/*
+  Tailwind v4 Setup
+  - @import "tailwindcss" loads the framework.
+  - @theme block defines custom variables which automatically generating utilities like bg-card, border-card-border.
+*/
 
 :root {
   --background: #020617;
@@ -15,6 +32,11 @@ body {
 }
 
 /* Glassmorphism Utilities */
+/* 
+   Note: @apply works with the utilities generated from the @theme block.
+   bg-card -> uses --color-card
+   border-card-border -> uses --color-card-border
+*/
 .glass-panel {
   @apply bg-card backdrop-blur-md border border-card-border rounded-3xl transition-all duration-300 hover:border-white/20 hover:shadow-lg hover:-translate-y-1;
 }
