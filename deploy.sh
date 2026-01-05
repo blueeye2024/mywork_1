@@ -132,7 +132,7 @@ DATE_ONLY=$(date "+%Y-%m-%d")
 LOG_ENTRY="## [$NEW_VERSION] - $DATE_ONLY\n- Deployed at $TIMESTAMP\n- Environment: Production (114.108.180.228)\n"
 
 # 파일 상단에 추가 (임시 파일 사용)
-echo -e "$LOG_ENTRY\n$(cat CHANGELOG.md)" > CHANGELOG.md
+echo -e "$LOG_ENTRY\n$(cat guidelines/변경이력.md)" > guidelines/변경이력.md
 
 echo -e "${GREEN}========================================================"
 echo -e "🚀 Deployment Successful!"
