@@ -1,6 +1,8 @@
 # SSH 키 생성 및 서버 등록 스크립트
 
 $ErrorActionPreference = "Stop"
+# 한글 출력 깨짐 방지
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $KeyPath = "$env:USERPROFILE\.ssh\id_rsa"
 
 Write-Host ">>> SSH 키 자동 등록 설정을 시작합니다..." -ForegroundColor Cyan
