@@ -12,6 +12,8 @@ git pull origin main
 
 # 2. 테스트 버전 태그 생성
 export APP_VERSION="TEST-$(date +%H%M)"
+export NEXT_PUBLIC_API_URL_TEST="http://114.108.180.228:8001"
+export NEXT_PUBLIC_SITE_URL_TEST="http://114.108.180.228:9201"
 
 # 3. 테스트 컨테이너 실행 (리소스 절약을 위해 제한된 자원 사용)
 # -f 옵션으로 기본 설정에 테스트 설정을 덮어씌움

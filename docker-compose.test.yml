@@ -18,8 +18,9 @@ services:
     ports:
       - "9201:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://114.108.180.228:8001
-      - NEXT_PUBLIC_SITE_URL=http://114.108.180.228:9201
+      # 환경 변수 기반으로 설정 (deploy/test 스크립트에서 주입 가능)
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL_TEST:-http://114.108.180.228:8001}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL_TEST:-http://114.108.180.228:9201}
       - NEXT_PUBLIC_APP_VERSION=${APP_VERSION:-test}-TEST
     deploy:
       resources:
