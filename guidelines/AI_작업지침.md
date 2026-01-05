@@ -32,15 +32,19 @@ git init
    - `.env`: DB 및 URL 정보 업데이트
    - `docker-compose.yml`: 컨테이너 이름 및 포트 매핑 변경
    - `frontend/src/app/page.tsx` & `layout.tsx`: UI 타이틀/브랜드명 변경
-   - `deploy.sh`: 스크립트 내 주석/로그 메시지 변경
+   - `deploy.sh` & `test.sh`: 스크립트 내 API/Site URL 자동 변경
    - `README.md`: 프로젝트 명세 업데이트
    - `guidelines/환경세팅.md`: 변경된 포트와 IP 업데이트
-3. **로컬 개발 환경 및 Git 설정**:
-   - `run_local.ps1` (로컬 논-도커 실행 스크립트)가 있는지 확인하고 유지해. 없다면 생성해.
-   - **Git 설정**: `git config user.name "blueeye2024"` 명령을 실행해.
-   - **Tailwind CSS v4 대응**: 
-     - `create-next-app` 사용 시 `frontend/tailwind.config.ts` 파일이 생성되었다면 **삭제**해.
-     - `frontend/src/app/globals.css`를 Tailwind v4 문법(`@import "tailwindcss"; @theme { ... }`)으로 작성해.
+3. **개발 및 배포 환경 자동화**:
+   - **Local 실행 루틴**: `run_local.ps1` 생성 (브라우저 자동 실행 포함).
+   - **원격 게시 루틴**: 
+     - `publish.ps1` 생성 (Git Push + SSH 원격 실행).
+     - `setup_ssh_key.ps1` 생성 (SSH 키 자동 등록).
+   - **테스트 루틴**:
+     - `test.sh` 및 `docker-compose.test.yml` 생성 (Staging 환경 구성).
+   - **Git & CSS**:
+     - `git config user.name "blueeye2024"` 자동 실행.
+     - Tailwind CSS v4 문법(`@theme`) 적용 확인.
 4. **초기화**: 
    - `VERSION` 파일을 `1.0.0`으로 리셋해.
    - `guidelines/변경이력.md`를 초기화해.
