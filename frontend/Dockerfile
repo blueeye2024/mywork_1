@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:18-slim AS base
 
 # 빌드 인자(ARG) 정의 - 버전 정보 주입용
 ARG NEXT_PUBLIC_APP_VERSION
@@ -6,7 +6,7 @@ ENV NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION
 
 # 1. 의존성 설치 (Deps)
 FROM base AS deps
-RUN apk add --no-cache libc6-compat
+# Debian uses glibc, so libc6-compat is not needed.
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml* ./
@@ -36,8 +36,8 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN groupadd --system --gid 1001 nodejs
+RUN useradd --system --uid 1001 nextjs
 
 # 정적 파일 및 Standalone 빌드 복사
 COPY --from=builder /app/public ./public
@@ -45,7 +45,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Healthcheck 도구 설치
-RUN apk add --no-cache curl
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 USER nextjs
 
