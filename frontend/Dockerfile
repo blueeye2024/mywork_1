@@ -4,15 +4,10 @@ FROM node:18-slim AS base
 ARG NEXT_PUBLIC_APP_VERSION
 ENV NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION
 
-# 1. 의존성 설치 (Deps)
-FROM base AS deps
-# Debian uses glibc, so libc6-compat is not needed.
-WORKDIR /app
+ARG NEXT_PUBLIC_APP_VERSION
+ENV NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION
 
-COPY package.json pnpm-lock.yaml* ./
-RUN npm install -g pnpm && pnpm install --frozen-lockfile
-
-# 2. 빌드 (Builder)
+# 1. 빌드 (Builder) - Deps + Build 통합
 FROM base AS builder
 WORKDIR /app
 
@@ -20,14 +15,16 @@ WORKDIR /app
 ARG NEXT_PUBLIC_APP_VERSION
 ENV NEXT_PUBLIC_APP_VERSION=$NEXT_PUBLIC_APP_VERSION
 
-COPY --from=deps /app/node_modules ./node_modules
+COPY package.json pnpm-lock.yaml* ./
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
+
 COPY . .
 
 # Next.js 텔레메트리 끄기
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # 빌드 실행
-RUN npm install -g pnpm && pnpm run build
+RUN pnpm run build
 
 # 3. 실행 (Runner)
 FROM base AS runner
