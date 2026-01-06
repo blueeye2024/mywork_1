@@ -9,8 +9,8 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm ci
+COPY package.json pnpm-lock.yaml* ./
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
 # 2. 빌드 (Builder)
 FROM base AS builder
@@ -27,7 +27,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # 빌드 실행
-RUN npm run build
+RUN npm install -g pnpm && pnpm run build
 
 # 3. 실행 (Runner)
 FROM base AS runner

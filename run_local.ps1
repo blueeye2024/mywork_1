@@ -21,7 +21,7 @@ Start-Sleep -Seconds 5
 
 # 2. Frontend 실행 (새 창에서)
 Write-Host "[2/3] Launching Frontend (Next.js)..."
-Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd frontend; npm install; Write-Host 'Starting Frontend...'; npm run dev"
+Start-Process powershell -ArgumentList "-NoExit", "-Command", "cd frontend; pnpm install; Write-Host 'Starting Frontend...'; pnpm dev"
 
 Write-Host "[3/3] All services started!" -ForegroundColor Green
 Write-Host "   - Backend API: http://localhost:8000/docs"

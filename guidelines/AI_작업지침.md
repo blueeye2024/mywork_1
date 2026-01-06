@@ -6,17 +6,26 @@
 
 ---
 
-## 1단계: 기존 프로젝트 복제 (Clone)
+## 1단계: 스마트 프로젝트 복제 (Smart Copy & Assembly)
 
-먼저 안정화된 이 프로젝트(`mywork_1`)를 템플릿으로 사용합니다.
+기존 프로젝트를 통째로 복사하는 대신, 핵심 파일만 가져와서 `pnpm`으로 가볍게 재조립합니다. 이 방식은 디스크 용량을 획기적으로 절약합니다.
 
-```bash
-# 새 프로젝트 폴더 생성 및 소스 가져오기
-git clone https://github.com/blueeye2024/mywork_1.git new_project
-cd new_project
-# 기존 git 이력 제거 (새 출발)
-rm -rf .git
-git init
+### 1-1. 파일 복사
+새 프로젝트 폴더를 만들고, 기존 프로젝트에서 **다음 폴더와 파일만** 복사해옵니다.
+*   ✅ **가져올 것**: `frontend`(단, `node_modules`, `.next` 제외), `backend`(단, `venv`, `__pycache__` 제외), `guidelines`, `docker-compose.yml`, `*.ps1`, `*.sh`, `*.json`, `.env`
+*   ❌ **버릴 것**: `node_modules`, `.next`, `.git`, `__pycache__`
+
+### 1-2. 의존성 재조립 (1초컷)
+새 폴더의 터미널에서 다음 명령어로 끊어진 연결을 다시 잇습니다.
+
+```powershell
+# Frontend: pnpm으로 가볍게 연결 (하드 링크 사용)
+cd frontend
+pnpm install
+
+# Backend: 기존 방식대로 설치
+cd ../backend
+pip install -r requirements.txt
 ```
 
 ## 2단계: AI에게 명령하기 (Master Prompt)
@@ -36,7 +45,7 @@ git init
    - `README.md`: 프로젝트 명세 업데이트
    - `guidelines/환경세팅.md`: 변경된 포트와 IP 업데이트
 3. **개발 및 배포 환경 자동화**:
-   - **Local 실행 루틴**: `run_local.ps1` 생성 (브라우저 자동 실행 포함).
+   - **Local 실행 루틴**: `run_local.ps1` 생성 (Frontend는 반드시 `pnpm` 사용, 브라우저 자동 실행 포함).
    - **원격 게시 루틴**: 
      - `publish.ps1` 생성 (Git Push + SSH 원격 실행).
      - `setup_ssh_key.ps1` 생성 (SSH 키 자동 등록).
